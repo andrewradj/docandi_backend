@@ -100,6 +100,28 @@ class UserController extends Controller
         return json_encode($responseData);
     }
 
+    public function GetListUsers()
+    {
+        $responseData = new Response;
+        $listuser = $this->userObj->GetAllMember();
+        if (!empty($listuser)) {
+            foreach ($listuser as $key => $value) {
+                $rewardObj = new RewardModel();
+                $avatarDetails = $rewardObj->GetRewardById($value->avatar);
+                $avatarUrl = Constants::IMAGES_URL . $avatarDetails->url;
+                $value->avatarUrl = $avatarUrl;
+                
+            }
+
+            $responseData->Data = $listuser;
+            $responseData->Status = Constants::RESPONSE_STATUS_SUCCESS;
+        } else {
+            $responseData->Status = Constants::RESPONSE_STATUS_ERROR;
+            $responseData->Message = Constants::RESPONSE_STATUS_USER_NOTFOUND;
+        }
+        return json_encode($responseData);
+    }
+    
     public function ChangePassword(Request $request)
     {
 

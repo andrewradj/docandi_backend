@@ -107,7 +107,13 @@ class PatientCaptureModel extends Model
                                   ");
     }
 
-    public function GetReasonSumary($dateStart,$dateEnd,$locationId,$hcfId)
+    public function GetRecentActivity($dateStart, $dateEnd) //,$dateEnd
+    {
+        return DB::table('patient_capture')->select('id', 'status', 'user_id')->whereRaw("DATE(created_at) = '".date('Y-m-d')."'")->get();
+        // ->where('patient_capture.created_at',$dateStart)
+    }
+
+    public function GetReasonSumary($dateStart,$dateEnd,$locationI,$hcfId)
     {
         if($locationId == 0) {
             return DB::table('patient_capture')

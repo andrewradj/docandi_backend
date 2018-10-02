@@ -97,7 +97,12 @@ Route::group(['middleware' => ['session']], function () {
 	Route::get('/quotes/getquotes','QuotesController@GetQuote');
 
 	Route::get('user/completetutorial','UserController@CompleteTutorial');
+	
+	//added--
 
+	Route::post('/patientcapture/getrecentactivity','PatientCaptureController@GetRecentActivity');
+
+	Route::get('user/getalluser', 'UserController@GetListUsers');
 });
 
 Route::group(['middleware' => ['sessionadmin']], function () {
@@ -132,7 +137,7 @@ Route::group(['middleware' => ['sessionadmin']], function () {
 
     Route::post('user/addgoal','UserController@AddGoal');
 
-    Route::post('patientcapture/patientscapturesumary','PatientCaptureController@PatientsCaptureSumary');
+	Route::get('/patientcapture/patientscapturesumary','PatientCaptureController@PatientsCaptureSumary');
 
     Route::post('health_care_facilities/updateintroduction','HcfController@UpdateHcfIntroduction');
 
@@ -140,7 +145,11 @@ Route::group(['middleware' => ['sessionadmin']], function () {
 
     Route::post('hcf/addbaseline','HcfController@UpdateHcfUploadBaseLine');
 
-    Route::get('hcf/getbaseline','HcfController@GetHcfBaseLine');
+	Route::get('hcf/getbaseline','HcfController@GetHcfBaseLine');
+	
+	//added--
+	Route::post('/patientcapture/getrecentactivity','PatientCaptureController@GetRecentActivity');
+	Route::get('user/getalluser', 'UserController@GetListUsers');
 
 });
 

@@ -20,6 +20,11 @@ class UserModel extends Model
         return DB::table('user')->select('id', 'full_name', 'health_care_facility_id', 'role')->where('role',Constants::USER)->orWhere('role',Constants::ADMIN)->get();
     }
 
+    public function GetAllMember()
+    {
+        return DB::table('user')->select('id', 'full_name', 'avatar')->where('role',Constants::USER)->orWhere('role',Constants::ADMIN)->get();
+    }
+
     public function GetUserByEmail($email)
     {
         return DB::table('user')->where('email', $email)->first();

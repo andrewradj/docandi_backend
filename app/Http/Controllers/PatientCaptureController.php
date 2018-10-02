@@ -260,4 +260,36 @@ class PatientCaptureController extends Controller
         }
         return json_encode($responseData);
     }
+
+    //added
+    
+    public function GetRecentActivity(Request $request)
+    {
+        $responseData = new Response;
+        $user = $_SESSION[Constants::SESSION_KEY_USER];
+
+        if (!isset($request->date_end)) {
+            $responseData->Status = Constants::RESPONSE_STATUS_ERROR;
+            $responseData->Message = Constants::RESPONSE_MESSAGE_INVALID_INPUT;
+        } else {
+            
+            $date_start = $request->date_end;
+            $date_end = $request->date_end;
+   
+            $date_end = strtotime(date("Y-m-d", strtotime($date_end)) . " +1 day");
+            $date_end = strftime("%Y-%m-%d", $date_end);
+            $allactivity = $this->patientCaptureObj->GetRecentActivity($date_start, $date_end);
+
+            if (!empty($allactivity)) {
+                $responseData->Data = $allactivity;
+                $responseData->Status = Constants::RESPONSE_STATUS_SUCCESS;
+            } else {
+                $responseData->Data = array();
+                $responseData->Status = Constants::RESPONSE_STATUS_ERROR;
+            }
+        }
+
+        return json_encode($responseData);
+      
+    }
 }
